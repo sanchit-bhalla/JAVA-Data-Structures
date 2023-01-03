@@ -1,7 +1,6 @@
 package LinkedList;
 
 import java.io.*;
-import java.util.*;
 
 public class CustomLL {
     public static class Node {

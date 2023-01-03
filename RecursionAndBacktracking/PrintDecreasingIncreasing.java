@@ -1,7 +1,6 @@
 package RecursionAndBacktracking;
 
 import java.util.*;
-import java.io.*;
 
 /*
  OutPut: 
@@ -27,8 +26,9 @@ public class PrintDecreasingIncreasing {
     }
 
     public static void main(String[] args) {
-        Scanner scn = new Scanner(System.in);
-        int n = scn.nextInt();
-        printDecreasingIncreasing(n);
+        try (Scanner scn = new Scanner(System.in)) {
+            int n = scn.nextInt();
+            printDecreasingIncreasing(n);
+        }
     }
 }
