@@ -1,7 +1,6 @@
 package RecursionAndBacktracking;
 
 import java.io.*;
-import java.util.*;
 
 public class AllIndicesArray {
 
