@@ -41,6 +41,18 @@ public class CustomGenericTree {
         return max;
     }
 
+    public static int height(Node node) {
+        int ht = -1; // initially
+
+        for (Node child : node.children) {
+            int child_height = height(child);
+            ht = Math.max(child_height, ht);
+        }
+
+        ht += 1; // for edge between root and subtree
+        return ht;
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
