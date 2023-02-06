@@ -31,6 +31,16 @@ public class CustomGenericTree {
         return size;
     }
 
+    public static int max(Node node) {
+        int max = Integer.MIN_VALUE;
+        for (Node child : node.children) {
+            int max_of_child = max(child);
+            max = Math.max(max_of_child, max);
+        }
+        max = Math.max(node.data, max);
+        return max;
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
