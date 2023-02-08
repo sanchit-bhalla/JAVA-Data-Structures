@@ -6,6 +6,15 @@ public class CustomGenericTree {
     private static class Node {
         int data;
         ArrayList<Node> children = new ArrayList<>();
+
+        // bcz when we give parameterized constructor, default constructor will also be
+        // removed, so we need to give explicity
+        Node() {
+        }
+
+        Node(int data) {
+            this.data = data;
+        }
     }
 
     public static void display(Node node) {
@@ -86,6 +95,7 @@ public class CustomGenericTree {
         System.out.print(".");
     }
 
+    // Approach 1: Using 2 queues
     public static void levelOrderLinewise(Node node) {
         Queue<Node> mq = new ArrayDeque<>(); // main queue
         Queue<Node> cq = new ArrayDeque<>(); // child Queue
@@ -105,6 +115,84 @@ public class CustomGenericTree {
                 mq = cq;
                 cq = new ArrayDeque<>();
             }
+        }
+    }
+
+    // Approach 2 - Delimiter Approach --> Using 1 Queue and node with data -1 (or
+    // null) is used as delimiter to check whether level is completed or not
+    public static void levelOrderLinewise2(Node node) {
+        Queue<Node> mq = new ArrayDeque<>(); // main queue
+        mq.add(node);
+        mq.add(new Node(-1)); // -1 will tell us that one level has been completed
+
+        while (mq.size() > 0) {
+            Node front = mq.remove();
+
+            if (front.data == -1) {
+                // level has been completed
+                if (mq.size() > 0) {
+                    // add node with data -1 to indicate level completed for children
+                    mq.add(new Node(-1));
+                    System.out.println();
+                }
+            } else {
+                System.out.print(front.data + " ");
+
+                for (Node child : front.children) {
+                    mq.add(child);
+                }
+            }
+        }
+    }
+
+    // Approach 3 --> Count Approach --> Count number of elements in a particular
+    // level and then run loop for that number of times and add their children in
+    // queue
+    public static void levelOrderLinewise3(Node node) {
+        Queue<Node> mq = new ArrayDeque<>(); // main queue
+        mq.add(node);
+        while (mq.size() > 0) {
+            int count = mq.size(); // count of node in current level
+            for (int i = 0; i < count; i++) {
+                Node front = mq.remove();
+                System.out.print(front.data + " ");
+
+                for (Node child : front.children) {
+                    mq.add(child);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    // Approach 4 - Using Pair class of Node and level. Whenever level changes,
+    // print in new line
+    public static void levelOrderLinewise4(Node node) {
+        Queue<Pair> mq = new ArrayDeque<>();
+        mq.add(new Pair(node, 1));
+        int curr_level = 1;
+
+        while (mq.size() > 0) {
+            Pair p = mq.remove();
+            if (p.level != curr_level) {
+                System.out.println();
+                curr_level = p.level;
+            }
+
+            System.out.print(p.node.data + " ");
+            for (Node child : p.node.children) {
+                mq.add(new Pair(child, p.level + 1));
+            }
+        }
+    }
+
+    private static class Pair {
+        Node node;
+        int level;
+
+        Pair(Node node, int level) {
+            this.node = node;
+            this.level = level;
         }
     }
 
@@ -139,6 +227,24 @@ public class CustomGenericTree {
                 cs = new Stack<>();
                 level++;
             }
+        }
+    }
+
+    public static void mirror(Node node) {
+        // corner case
+        if (node == null)
+            return;
+
+        // Mirror sub trees
+        for (Node child : node.children) {
+            mirror(child);
+        }
+
+        // Now reverse node.children Array to mirror the whole tree
+        for (int i = 0, j = node.children.size() - 1; i < j; i++, j--) {
+            Node temp = node.children.get(i);
+            node.children.set(i, node.children.get(j));
+            node.children.set(j, temp);
         }
     }
 
