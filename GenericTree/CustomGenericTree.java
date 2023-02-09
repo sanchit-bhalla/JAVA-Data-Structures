@@ -252,6 +252,70 @@ public class CustomGenericTree {
         }
     }
 
+    private static Node getTail(Node node) {
+        while (node.children.size() == 1) {
+            node = node.children.get(0);
+        }
+        return node;
+    }
+
+    // Approach 1 - T.C --> O(n^2)
+    public static void linearize(Node node) {
+        for (Node child : node.children) {
+            linearize(child);
+        }
+
+        /*
+         * Way 1
+         * // Now subtree has been linearized. we now need to linearize whole tree
+         * // i.e remove curr Child and add it child to the last node(tail) of prevChild
+         * // Also run loop in reverse direction bcz we are removing from aray
+         * for (int i = node.children.size() - 1; i >= 1; i--) {
+         * Node prevChild = node.children.get(i - 1);
+         * Node currChild = node.children.get(i);
+         * 
+         * // Remove curr child
+         * node.children.remove(i);
+         * 
+         * // Add curr child to tail of prev child
+         * while (prevChild.children.size() > 0) {
+         * prevChild = prevChild.children.get(0);
+         * }
+         * prevChild.children.add(currChild);
+         * }
+         */
+
+        // Way 2
+        // Remove last child and add it to the tail of seconlast child.
+        // Keep doing it until only 1 child left
+        while (node.children.size() > 1) {
+            Node lc = node.children.remove(node.children.size() - 1); // Remove and give last child
+            Node slc = node.children.get(node.children.size() - 1); // second last child
+            Node slc_tail = getTail(slc); // tail of second last child
+            slc_tail.children.add(lc);
+        }
+    }
+
+    // Approach 2: Effecient Approach --> Along with linearizinig subtree, it will
+    // also return tail So we don't need to traverse subtree again to get tail
+    public static Node linearize2(Node node) {
+        // base case - If node is a leaf
+        if (node.children.size() == 0)
+            return node;
+
+        // linearize subtree and return tail of last child
+        Node lc_tail = linearize2(node.children.get(node.children.size() - 1));
+
+        while (node.children.size() > 1) {
+            Node lc = node.children.remove(node.children.size() - 1); // remove and last child
+            Node slc = node.children.get(node.children.size() - 1); // second last child
+            Node slc_tail = linearize2(slc); // linearize second last child and return its tail
+            slc_tail.children.add(lc);
+        }
+
+        return lc_tail; // tail
+    }
+
     public static void mirror(Node node) {
         // corner case
         if (node == null)
