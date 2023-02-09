@@ -230,6 +230,28 @@ public class CustomGenericTree {
         }
     }
 
+    public static void removeLeaves(Node node) {
+        // Remove leaves from first level
+        // Run reverse loop bcz when we remove something from array, array also gets
+        // smaller and elements get shifted to left and some elements left untracked
+        for (int i = node.children.size() - 1; i >= 0; i--) {
+            Node child = node.children.get(i);
+            if (child.children.size() == 0) {
+                // Child is a leaf node
+                node.children.remove(i); // or node.children.remove(child)
+            }
+        }
+
+        // Remove leaves of subtree
+        // *** Removing leaves from subtree cannot be done before removing leaf of root
+        // because it is possible that after removing laeves from subtree, some child of
+        // root becomes leaf and when we removes leaves of root that node will also be
+        // removed ***
+        for (Node child : node.children) {
+            removeLeaves(child);
+        }
+    }
+
     public static void mirror(Node node) {
         // corner case
         if (node == null)
