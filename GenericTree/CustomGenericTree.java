@@ -436,6 +436,35 @@ public class CustomGenericTree {
         }
     }
 
+    // Don't compare data. Just compare shape
+    public static boolean areMirror(Node n1, Node n2) {
+        if (n1 == null && n2 == null) {
+            // corner case 1
+            return true;
+        } else if (n1 == null || n2 == null) {
+            // corner case 2
+            return false;
+        } else {
+            int num_child_n1 = n1.children.size();
+            int num_child_n2 = n2.children.size();
+
+            // check number of children equal or not
+            if (num_child_n1 != num_child_n2)
+                return false;
+
+            // check corresponding mirrored subtree are mirror or not
+            int i = 0;
+            int j = num_child_n2 - 1;
+            while (i < num_child_n1 && j >= 0) {
+                if (!areMirror(n1.children.get(i), n2.children.get(j)))
+                    return false;
+                i++;
+                j--;
+            }
+            return true;
+        }
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
