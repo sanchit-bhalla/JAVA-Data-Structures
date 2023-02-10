@@ -413,6 +413,29 @@ public class CustomGenericTree {
         return i + j;
     }
 
+    // Don't compare data. Just compare shape
+    public static boolean areSimilar(Node n1, Node n2) {
+        if (n1 == null && n2 == null) {
+            // corner case 1
+            return true;
+        } else if (n1 == null || n2 == null) {
+            // corner case 2
+            return false;
+        } else {
+            // check number of children
+            if (n1.children.size() != n2.children.size())
+                return false;
+
+            // check corresponding subtree are similar or not
+            for (int i = 0; i < n1.children.size(); i++) {
+                if (!areSimilar(n1.children.get(i), n2.children.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
