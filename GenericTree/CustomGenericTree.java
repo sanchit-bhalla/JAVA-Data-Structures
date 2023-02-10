@@ -391,6 +391,28 @@ public class CustomGenericTree {
         return path1.get(i + 1); // or path2.get(j+1)
     }
 
+    public static int distanceBetweenNodes(Node node, int d1, int d2) {
+        // distance b/w d1 and d2 doesn't include number of edges b/w lca and root
+        ArrayList<Integer> p1 = nodeToRootPath(node, d1); // d1 to root path
+        ArrayList<Integer> p2 = nodeToRootPath(node, d2); // d2 to root path
+
+        int i = p1.size() - 1;
+        int j = p2.size() - 1;
+
+        while (i >= 0 && j >= 0 && p1.get(i) == p2.get(j)) {
+            i--;
+            j--;
+        }
+
+        i++;
+        j++;
+
+        // Now p1.get(i) || p2.get(j) is our lca
+        // i now represent number of edges between lca and d1
+        // j now represent number of edges between lca and d2
+        return i + j;
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
