@@ -371,6 +371,26 @@ public class CustomGenericTree {
         return new ArrayList<>(); // If we reach here, it means no path is present
     }
 
+    // Lowest Common Ancestor
+    public static int lca(Node node, int d1, int d2) {
+        ArrayList<Integer> path1 = nodeToRootPath(node, d1); // d1 to root path
+        ArrayList<Integer> path2 = nodeToRootPath(node, d2); // d2 to root path
+
+        int i = path1.size() - 1;
+        int j = path2.size() - 1;
+
+        if (i == -1 || j == -1) {
+            return -1; // d1 or d2 not present in tree
+        }
+
+        while (i >= 0 && j >= 0 && path1.get(i) == path2.get(j)) {
+            i--;
+            j--;
+        }
+
+        return path1.get(i + 1); // or path2.get(j+1)
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
