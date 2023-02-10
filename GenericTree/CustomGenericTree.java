@@ -352,6 +352,25 @@ public class CustomGenericTree {
         return false;
     }
 
+    public static ArrayList<Integer> nodeToRootPath(Node node, int data) {
+        // base case
+        if (node.data == data) {
+            ArrayList<Integer> base_path = new ArrayList<>();
+            base_path.add(data);
+            return base_path;
+        }
+
+        for (Node child : node.children) {
+            ArrayList<Integer> subPath = nodeToRootPath(child, data); // subPath === Path till child
+            if (subPath.size() > 0) {
+                // add current Node data and return
+                subPath.add(node.data);
+                return subPath;
+            }
+        }
+        return new ArrayList<>(); // If we reach here, it means no path is present
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
