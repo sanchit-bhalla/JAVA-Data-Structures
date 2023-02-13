@@ -465,6 +465,17 @@ public class CustomGenericTree {
         }
     }
 
+    // if a vertical line is drawn through the centre of the tree then it should act
+    // like a mirror.
+    // tree is symmetric whenever the left half of the tree is the mirror image of
+    // the right half of the tree
+    // we can also check for whether our tree is the mirror image of itself or not.
+    // If a tree is a mirror image of itself then it will surely be symmetric.
+    // e.g Human face if symmetric but hand is not
+    public static boolean IsSymmetric(Node node) {
+        return areMirror(node, node);
+    }
+
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
