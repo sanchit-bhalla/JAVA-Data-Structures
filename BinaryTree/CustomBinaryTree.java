@@ -1,6 +1,5 @@
 package BinaryTree;
 
-import java.io.*;
 import java.util.*;
 
 public class CustomBinaryTree {
@@ -41,6 +40,69 @@ public class CustomBinaryTree {
 
         display(node.left);
         display(node.right);
+    }
+
+    public static int size(Node node) {
+        if (node == null)
+            return 0;
+
+        return 1 + size(node.left) + size(node.right);
+    }
+
+    public static int sum(Node node) {
+        if (node == null)
+            return 0;
+
+        return node.data + sum(node.left) + sum(node.right);
+    }
+
+    // Preorder Traversal
+    public static void traversalPre(Node node) {
+        if (node == null)
+            return;
+
+        System.out.println(node.data);
+        traversalPre(node.left);
+        traversalPre(node.right);
+    }
+
+    // Inorder Traversal
+    public static void traversalIn(Node node) {
+        if (node == null)
+            return;
+
+        traversalIn(node.left);
+        System.out.println(node.data);
+        traversalIn(node.right);
+    }
+
+    // Postorder Traversal
+    public static void traversalPost(Node node) {
+        if (node == null)
+            return;
+
+        traversalPost(node.left);
+        traversalPost(node.right);
+        System.out.println(node.data);
+    }
+
+    public static int max(Node node) {
+        if (node == null)
+            return Integer.MIN_VALUE;
+
+        int lm = max(node.left);
+        int rm = max(node.right);
+        int ans = Math.max(node.data, Math.max(lm, rm));
+        return ans;
+    }
+
+    public static int height(Node node) {
+        if (node == null)
+            return -1; // -1 for edges, 0 for nodes
+
+        int lsh = height(node.left); // Left Subtree height
+        int rsh = height(node.right); // Right Subtree height
+        return Math.max(lsh, rsh) + 1;
     }
 
     public static void main(String[] args) throws Exception {
@@ -87,5 +149,7 @@ public class CustomBinaryTree {
         }
 
         display(root);
+
+        // traversalIn(root);
     }
 }
