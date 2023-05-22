@@ -105,6 +105,31 @@ public class CustomBinaryTree {
         return Math.max(lsh, rsh) + 1;
     }
 
+    public static void levelOrder(Node node) {
+        if (node == null)
+            return;
+        Queue<Node> mq = new ArrayDeque<>();
+        mq.add(node);
+
+        while (mq.size() > 0) {
+            int size = mq.size();
+            for (int i = 0; i < size; i++) {
+                node = mq.remove();
+                System.out.print(node.data + " ");
+
+                if (node.left != null) {
+                    mq.add(node.left);
+                }
+
+                if (node.right != null) {
+                    mq.add(node.right);
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         Integer[] arr = { 50, 25, 12, null, null, 37, 30, null, null, null, 75, 62, null, 70, null, null, 87, null,
                 null };
